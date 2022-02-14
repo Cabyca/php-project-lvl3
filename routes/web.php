@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UrlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::resource('urls', UrlController::class);
+
+//Route::get('articles', [ArticleController::class, 'index']);
+
+//Route::resource('urls', 'UrlController');
 
 Route::get('/', function () {
     return view('welcome');
