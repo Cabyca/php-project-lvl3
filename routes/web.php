@@ -13,15 +13,25 @@ use App\Http\Controllers\UrlController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('urls', UrlController::class);
+
 
 //Route::get('articles', [ArticleController::class, 'index']);
 
 //Route::resource('urls', 'UrlController');
 
+//$app->get('/schools/new', function ($request, $response) {
+//    $params = [
+//        'schoolData' => [],
+//        'errors' => []
+//    ];
+//    return $this->get('renderer')->render($response, 'schools/new.phtml', $params);
+//})->setName('newSchool');
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('urls', UrlController::class);
 
 Route::get('/test', function() {
     if (DB::connection()->getDatabaseName())  {

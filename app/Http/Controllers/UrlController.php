@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UrlController extends Controller
 {
@@ -13,6 +15,10 @@ class UrlController extends Controller
      */
     public function index()
     {
+        $users = DB::select('select * from urls');
+        foreach($users as $user) {
+            var_dump($user);
+        }
         echo "Превед медвед";
     }
 
@@ -23,7 +29,7 @@ class UrlController extends Controller
      */
     public function create()
     {
-        //
+        //return redirect()->route('urls.store');
     }
 
     /**
@@ -34,8 +40,32 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($url = $request->input('url.name'));
+        echo "----------/n";
+
+        echo "Это метод store";
+        $request->validate([
+            'url.name' => 'required|max:255'
+        ]);
+
+        $date = Carbon::now();
+
+        DB::table('urls')->insert(['name' => $url, 'created_at' => $date]);
+
+        return redirect('/')->with('success','Post created successfully.');
     }
+
+    //public function store(Request $request)
+    //{
+    //    $request->validate([
+    //        'title' => 'required',
+    //        'description' => 'required',
+    //    ]);
+//
+     //   Post::create($request->all());
+//
+     //   return redirect()->route('posts.index')->with('success','Post created successfully.');
+    //}
 
     /**
      * Display the specified resource.

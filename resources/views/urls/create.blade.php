@@ -1,13 +1,3 @@
-@if ($errors->any())
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 @extends('layout.app')
 @section('content')
     <main class="flex-grow-1">
@@ -17,8 +7,7 @@
                     <h1 class="display-3">Анализатор страниц</h1>
                     <p class="lead">Бесплатно проверяйте сайты на SEO пригодность</p>
                     <!--<form action="https://php-l3-page-analyzer.herokuapp.com/urls" method="post" class="d-flex justify-content-center">-->
-                    <form action="{{ route('urls.store') }}" method="post" class="d-flex justify-content-center">
-                        @csrf
+                    <form action="{{ route('urls.store') }}" method="POST" class="d-flex justify-content-center">
                         <input type="text" name="url[name]" value="" class="form-control form-control-lg" placeholder="https://www.example.com">
                         <input type="submit" class="btn btn-primary btn-lg ms-3 px-5 text-uppercase mx-3" value="Проверить">
                     </form>
