@@ -8,6 +8,7 @@
     <meta name="csrf-param" content="_token" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
 <header class="flex-shrink-0">
@@ -22,12 +23,21 @@
                     <a class="nav-link active" href="https://php-l3-page-analyzer.herokuapp.com">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="https://php-l3-page-analyzer.herokuapp.com/urls">Сайты</a>
+                    <a class="nav-link " href="{{ route('urls.index') }}">Сайты</a>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        <h5 class="alert alert-danger" role="alert">{{ $error }}</h5>
+        <br>
+    @endforeach
+@endif
+
+@include('flash::message')
 
 <div class="container">
     @yield('content')

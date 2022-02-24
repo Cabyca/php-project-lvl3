@@ -15,11 +15,9 @@ class UrlController extends Controller
      */
     public function index()
     {
-        $users = DB::select('select * from urls');
-        foreach($users as $user) {
-            var_dump($user);
-        }
-        echo "Превед медвед";
+        return view('urls.index', [
+            'urls' => DB::table('urls')->simplePaginate(15)
+        ]);
     }
 
     /**
@@ -29,7 +27,7 @@ class UrlController extends Controller
      */
     public function create()
     {
-        //return redirect()->route('urls.store');
+        //
     }
 
     /**
@@ -40,32 +38,19 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
-        print_r($url = $request->input('url.name'));
-        echo "----------/n";
-
-        echo "Это метод store";
+        $url = $request->input('url.name');
         $request->validate([
-            'url.name' => 'required|max:255'
+            "url.name" => ["required","max:255","unique:urls,name"]
         ]);
 
         $date = Carbon::now();
 
         DB::table('urls')->insert(['name' => $url, 'created_at' => $date]);
 
-        return redirect('/')->with('success','Post created successfully.');
-    }
+        flash('Url успешно добавлен')->success();
 
-    //public function store(Request $request)
-    //{
-    //    $request->validate([
-    //        'title' => 'required',
-    //        'description' => 'required',
-    //    ]);
-//
-     //   Post::create($request->all());
-//
-     //   return redirect()->route('posts.index')->with('success','Post created successfully.');
-    //}
+        return redirect('/');
+    }
 
     /**
      * Display the specified resource.
@@ -75,7 +60,8 @@ class UrlController extends Controller
      */
     public function show($id)
     {
-        //
+        $url = DB::table('urls')->find($id);
+        return view('urls.show', compact('url'));
     }
 
     /**
