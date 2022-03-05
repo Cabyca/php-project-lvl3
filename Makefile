@@ -24,6 +24,9 @@ log:
 test:
 	php artisan test
 
+install:
+	composer install
+
 console:
 	composer exec --verbose psysh
 
