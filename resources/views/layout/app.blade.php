@@ -29,20 +29,17 @@
         </div>
     </nav>
 </header>
-
-@if ($errors->any())
-    @foreach ($errors->all() as $error)
-        <h5 class="alert alert-danger" role="alert">{{ $error }}</h5>
-        <br>
-    @endforeach
-@endif
-
-@include('flash::message')
-
-<div class="container">
+<main class="flex-grow-1">
+    @include('flash::message')
+    <div class="flex-shrink-0">
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <h5 class="alert alert-danger" role="alert" class="flex-shrink-0">{{ $error }}</h5>
+            @endforeach
+        @endif
+    </div>
     @yield('content')
-</div>
-
+</main>
 <footer class="border-top py-3 mt-5 flex-shrink-0">
     <div class="container-lg">
         <div class="text-center">
@@ -50,6 +47,5 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>

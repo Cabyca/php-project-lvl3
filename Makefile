@@ -5,7 +5,6 @@ setup:
 	composer install
 	cp -n .env.example .env|| true
 	php artisan key:gen --ansi
-	touch database/database.sqlite
 	php artisan migrate
 	php artisan db:seed
 	npm install
@@ -25,32 +24,18 @@ log:
 test:
 	php artisan test
 
-deploy:
-	git push heroku
+console:
+	composer exec --verbose psysh
 
 lint:
-	composer phpcs
+	composer exec --verbose phpcs -- --standard=PSR12 src tests
 
 lint-fix:
-	composer phpcbf
+	composer exec --verbose phpcbf -- --standard=PSR12 src tests
 
-compose:
-	docker-compose up
+test:
+	composer exec --verbose phpunit tests
 
-compose-test:
-	docker-compose run web make test
+test-coverage:
+	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
 
-compose-bash:
-	docker-compose run web bash
-
-compose-setup: compose-build
-	docker-compose run web make setup
-
-compose-build:
-	docker-compose build
-
-compose-db:
-	docker-compose exec db psql -U postgres
-
-compose-down:
-	docker-compose down -v

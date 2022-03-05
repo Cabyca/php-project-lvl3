@@ -417,3 +417,14 @@
                     </main>
                 @endsection
 
+@include('flash::message')
+<div class="flex-shrink-0">
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <h5 class="alert alert-danger" role="alert" class="flex-shrink-0">{{ $error }}</h5>
+        @endforeach
+    @endif
+</div>
+
+<div class="alert alert-danger "role="alert">Некорректный URL</div>
+

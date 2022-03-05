@@ -40,12 +40,22 @@ class UrlController extends Controller
     {
         $url = $request->input('url.name');
         $request->validate([
-            "url.name" => ["required","max:255","unique:urls,name"]
+            "url.name" => ["required","max:255","url"]
         ]);
+
+        $parseUrl = parse_url($url);
+        $urlToDatabase = $parseUrl['scheme'] . "://" . $parseUrl['host'];
+
+        $id = DB::table('urls')->where('name', $urlToDatabase)->value('id');
+
+        if($id) {
+            flash('Страница уже существует')->success();
+            return redirect()->route('urls.show', ['url' => $id]);
+        }
 
         $date = Carbon::now();
 
-        DB::table('urls')->insert(['name' => $url, 'created_at' => $date]);
+        DB::table('urls')->insert(['name' => $urlToDatabase, 'created_at' => $date]);
 
         flash('Url успешно добавлен')->success();
 

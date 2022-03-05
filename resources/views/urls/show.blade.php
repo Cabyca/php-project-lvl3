@@ -7,7 +7,7 @@
                 <table class="table table-bordered table-hover text-nowrap">
                     <tbody><tr>
                         <td>ID</td>
-                        <td>1</td>
+                        <td>{{ $url->id }}</td>
                     </tr>
                     <tr>
                         <td>Имя</td>
