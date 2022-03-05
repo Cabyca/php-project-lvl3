@@ -12,9 +12,6 @@ setup:
 watch:
 	npm run watch
 
-migrate:
-	php artisan migrate
-
 console:
 	php artisan tinker
 
