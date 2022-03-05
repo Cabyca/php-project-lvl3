@@ -31,10 +31,10 @@ console:
 	composer exec --verbose psysh
 
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 src app
+	composer exec --verbose phpcs -- --standard=PSR12
 
 lint-fix:
-	composer exec --verbose phpcbf -- --standard=PSR12 src app
+	composer exec --verbose phpcbf -- --standard=PSR12
 
 test:
 	composer exec --verbose phpunit tests
