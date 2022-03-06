@@ -48,7 +48,7 @@ class UrlController extends Controller
 
         $id = DB::table('urls')->where('name', $urlToDatabase)->value('id');
 
-        if($id) {
+        if ($id) {
             flash('Страница уже существует')->success();
             return redirect()->route('urls.show', ['url' => $id]);
         }

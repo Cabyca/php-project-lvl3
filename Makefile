@@ -25,14 +25,11 @@ log:
 test:
 	php artisan test
 
-install:
-	composer install
-
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12
+	composer exec --verbose phpcs -- --standard=PSR12 app
 
 lint-fix:
-	composer exec --verbose phpcbf -- --standard=PSR12
+	composer exec --verbose phpcbf -- --standard=PSR12 app
 
 # test:
 # 	composer exec --verbose phpunit tests
