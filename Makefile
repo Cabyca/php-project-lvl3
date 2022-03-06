@@ -3,9 +3,9 @@ start:
 
 setup:
 	composer install
-	cp -n .env.example .env|| true
+	cp -n .env.example .env || true
 	php artisan key:gen --ansi
-	make postgres
+	touch database/database.sqlite
 	php artisan migrate
 	php artisan db:seed
 	npm install
@@ -28,17 +28,14 @@ test:
 install:
 	composer install
 
-console:
-	composer exec --verbose psysh
-
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12
 
 lint-fix:
 	composer exec --verbose phpcbf -- --standard=PSR12
 
-test:
-	composer exec --verbose phpunit tests
+# test:
+# 	composer exec --verbose phpunit tests
 
 test-coverage:
 	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
