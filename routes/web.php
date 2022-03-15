@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UrlCheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UrlController;
 
@@ -14,24 +15,16 @@ use App\Http\Controllers\UrlController;
 |
 */
 
-
-//Route::get('articles', [ArticleController::class, 'index']);
-
-//Route::resource('urls', 'UrlController');
-
-//$app->get('/schools/new', function ($request, $response) {
-//    $params = [
-//        'schoolData' => [],
-//        'errors' => []
-//    ];
-//    return $this->get('renderer')->render($response, 'schools/new.phtml', $params);
-//})->setName('newSchool');
-
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::resource('urls', UrlController::class);
+
+Route::resource('urls/{id}/checks', UrlCheckController::class)->only([
+    'store'
+]);
+// checks.store
 
 Route::get('/test', function() {
     if (DB::connection()->getDatabaseName())  {

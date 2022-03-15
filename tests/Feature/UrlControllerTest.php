@@ -70,6 +70,8 @@ class UrlControllerTest extends TestCase
         $response = $this->post(route('urls.store'), $dataCorrectNoExistsToBase);
         $response->assertRedirect('/');
         $response->assertSessionHasNoErrors();
+        //сделать на наличие в базе
+        //$response = ass
 
         $dataCorrectExistsToBase = ['url' => ['name' => "https://www.yandex.ru"]];
         $id = DB::table('urls')->where('name', $dataCorrectExistsToBase['url']['name'])->value('id');

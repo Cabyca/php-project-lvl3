@@ -18,9 +18,6 @@ class UrlController extends Controller
         return view('urls.index', [
             'urls' => DB::table('urls')->simplePaginate(15)
         ]);
-
-        //$url = DB::table('urls')->find($id);
-        //return view('urls.show', compact('url'));
     }
 
     /**
