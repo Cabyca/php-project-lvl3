@@ -12,26 +12,21 @@ class UrlCheckController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function store(Request $request, $id)
     {
-        echo $id;
-        dd("Превед медвед");
-
-
-
-        $url = $request->input('url.name');
-
-        $parseUrl = parse_url($url);
-        $urlToDatabase = $parseUrl['scheme'] . "://" . $parseUrl['host'];
-
         $date = Carbon::now();
+        DB::table('url_checks')->insert(['url_id' => $id, 'created_at' => $date]);
 
-        DB::table('urls')->insert(['name' => $urlToDatabase, 'created_at' => $date]);
+        //Выведите идентификаторы и даты всех проверок на странице сайта.
+        $checksSite = DB::table('url_checks')
+            ->latest()
+            ->get()
+            ->where('url_id', $id);
 
-        flash('Url успешно добавлен')->success();
+        $url = DB::table('urls')->find($id);
 
-        return redirect('/');
+        return view('urls.show', compact('checksSite', 'url'));
     }
 }

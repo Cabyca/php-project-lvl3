@@ -55,24 +55,34 @@ class UrlControllerTest extends TestCase
         $response->assertNotFound();;
     }
 
-    public function testIndex()
-    {
-        $response = $this->get(route('urls.index'));
-        $response->assertOk();
-        $namesUrl = DB::table('urls')->pluck('name')->toArray();
-        $response->assertSeeInOrder($namesUrl);
-        $response->assertViewIs('urls.index');
-    }
+//    public function testIndex()
+//    {
+//        $response = $this->get(route('urls.index'));
+//        $response->assertOk();
+//        $namesUrl = DB::table('urls')->pluck('name')->toArray();
+//        $response->assertSeeInOrder($namesUrl);
+//        $response->assertViewIs('urls.index');
+//    }
 
-    public function testStore()
+    public function testStoreValid()
     {
         $dataCorrectNoExistsToBase = ['url' => ['name' => "https://www.PrevedMedved.ru"]];
         $response = $this->post(route('urls.store'), $dataCorrectNoExistsToBase);
         $response->assertRedirect('/');
         $response->assertSessionHasNoErrors();
+        $test = DB::table('urls')->where('name', 'https://www.PrevedMedved.ru')->get();
+        print_r($name = $test->first()->name);
+        $this->assertEquals('https://www.PrevedMedved.ru', $name);
+
+        //assertSame(mixed $expected, mixed $actual[, string $message = '']) из Unit
+
+        //$response->assert('https://www.PrevedMedved.ru' , $name);
         //сделать на наличие в базе
         //$response = ass
+    }
 
+    public function testStore()
+    {
         $dataCorrectExistsToBase = ['url' => ['name' => "https://www.yandex.ru"]];
         $id = DB::table('urls')->where('name', $dataCorrectExistsToBase['url']['name'])->value('id');
         $response = $this->post(route('urls.store'), $dataCorrectExistsToBase);
