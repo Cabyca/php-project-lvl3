@@ -15,26 +15,17 @@ class UrlController extends Controller
      */
     public function index()
     {
-        //$lastCheckSite = DB::table('url_checks')->get()->where('created_at');
-
         $lastCheckSites = DB::table('urls')
             ->leftJoin('url_checks', 'urls.id', '=', 'url_checks.url_id')
+            ->select('urls.id', 'urls.name', 'url_checks.status_code', 'url_checks.created_at')
             ->groupBy('url_checks.url_id')
-            ->select('urls.id', 'url_checks.url_id', 'urls.name', 'url_checks.created_at');
+            ->orderBy('urls.id');
 
-        // а как увидеть этот запрос? и почему у меня получилось выводить последнюю дату проверки?
-
-            //->where('url_checks.created_at')
-            //->latest();
-            //->get();
+        //'url_checks.url_id',
 
         return view('urls.index', [
             'lastCheckSites' => $lastCheckSites->simplePaginate(15)
         ]);
-
-        //return view('urls.index', [
-        //    'urls' => DB::table('urls')->simplePaginate(15)
-        //]);
     }
 
     /**
@@ -90,11 +81,10 @@ class UrlController extends Controller
         $url = DB::table('urls')->find($id);
         $checksSite = DB::table('url_checks')
             ->latest()
-            ->get()
-            ->where('url_id', $id);
+            ->where('url_id', $id)
+            ->get();
         return view('urls.show', compact('url', 'checksSite'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *

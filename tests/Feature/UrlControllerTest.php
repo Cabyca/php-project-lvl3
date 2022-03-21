@@ -27,6 +27,8 @@ class UrlControllerTest extends TestCase
     public function testAssertDatabaseHas(): void
     {
         $this->assertDatabaseHas('urls', ['name' => 'https://www.yandex.ru']);
+        $this->assertDatabaseHas('urls', ['name' => 'https://www.mail.ru']);
+        $this->assertDatabaseHas('urls', ['name' => 'https://www.google.com']);
     }
 
     public function testAssertDatabaseCount()
@@ -52,17 +54,16 @@ class UrlControllerTest extends TestCase
     {
         $response = $this->get('/urlss');
 
-        $response->assertNotFound();;
+        $response->assertNotFound();
     }
 
-//    public function testIndex()
-//    {
-//        $response = $this->get(route('urls.index'));
-//        $response->assertOk();
-//        $namesUrl = DB::table('urls')->pluck('name')->toArray();
-//        $response->assertSeeInOrder($namesUrl);
-//        $response->assertViewIs('urls.index');
-//    }
+    public function testIndex()
+    {
+        $response = $this->get(route('urls.index'));
+        $response->assertOk();
+        $namesUrl = DB::table('urls')->pluck('name')->toArray();
+        $response->assertViewIs('urls.index');
+    }
 
     public function testStoreValid()
     {
@@ -70,29 +71,25 @@ class UrlControllerTest extends TestCase
         $response = $this->post(route('urls.store'), $dataCorrectNoExistsToBase);
         $response->assertRedirect('/');
         $response->assertSessionHasNoErrors();
-        $test = DB::table('urls')->where('name', 'https://www.PrevedMedved.ru')->get();
-        print_r($name = $test->first()->name);
-        $this->assertEquals('https://www.PrevedMedved.ru', $name);
-
-        //assertSame(mixed $expected, mixed $actual[, string $message = '']) из Unit
-
-        //$response->assert('https://www.PrevedMedved.ru' , $name);
-        //сделать на наличие в базе
-        //$response = ass
+        $this->assertDatabaseHas('urls', ['name' => 'https://www.PrevedMedved.ru']);
     }
 
-    public function testStore()
+    public function testStoreNoValid()
     {
-        $dataCorrectExistsToBase = ['url' => ['name' => "https://www.yandex.ru"]];
-        $id = DB::table('urls')->where('name', $dataCorrectExistsToBase['url']['name'])->value('id');
-        $response = $this->post(route('urls.store'), $dataCorrectExistsToBase);
-        $response->assertRedirect(route('urls.show', ['url' => $id]));
-        $response->assertSessionHasNoErrors();
-
         $dataInCorrect = ['url' => ['name' => "yandex"]];
         $response = $this->post(route('urls.store'), $dataInCorrect);
         $response->assertRedirect('/');
         $response->assertSessionHasErrors();
+        $this->assertDatabaseMissing('urls', ['name' => "yandex"]);
+    }
+
+    public function testStoreValidExistsToDataBase()
+    {
+        $id = DB::table('urls')->where('name', 'https://www.yandex.ru')->value('id');
+        $response = $this->post(route('urls.store'), ['url' => ['name' => "https://www.yandex.ru"]]);
+        $response->assertRedirect(route('urls.show', ['url' => $id]));
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('urls', ['name' => 'https://www.yandex.ru']);
     }
 
     public function testShow()

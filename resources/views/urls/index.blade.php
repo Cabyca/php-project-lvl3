@@ -18,7 +18,7 @@
                         <td>{{ $lastCheckSite->id }}</td>
                         <td><a href="{{ route('urls.show', $lastCheckSite->id) }}">{{ $lastCheckSite->name }}</a></td>
                         <td>{{ $lastCheckSite->created_at }}</td>
-                        <td>{{ "пока пусто" }}</td>
+                        <td>{{ $lastCheckSite->status_code }}</td>
                     </tr>
                     @endforeach
                 </tbody>
