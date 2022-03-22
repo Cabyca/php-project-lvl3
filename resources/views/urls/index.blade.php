@@ -1,6 +1,5 @@
 @extends('layout.app')
 @section('content')
-
 <main class="flex-grow-1">
     <div class="container-lg">
         <h1 class="mt-5 mb-3">Сайты</h1>

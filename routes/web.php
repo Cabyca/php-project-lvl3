@@ -19,22 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('urls', UrlController::class);
+Route::resource('urls', UrlController::class)->only([
+    'index', 'store', 'show'
+]);
 
 Route::resource('urls/{id}/checks', UrlCheckController::class)->only([
     'store'
 ]);
-// checks.store
-
-Route::get('/test', function() {
-    if (DB::connection()->getDatabaseName())  {
-        print_r(DB::connection()->getDatabaseName());
-        print_r(DB::connection()->getDriverName()); //Получите имя драйвера PDO.
-        print_r(DB::connection()->getConfig());
-
-
-        dd('Есть контакт!');
-    } else {
-        return 'Соединения нет';
-    }
-});

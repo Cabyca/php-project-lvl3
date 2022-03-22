@@ -28,33 +28,20 @@ class UrlCheckControllerTest extends TestCase
 
     }
 
-//    public function testAssertDatabaseHas(): void
-//    {
-//        $this->assertDatabaseHas('urls', ['name' => 'https://www.yandex.ru']);
-//        $this->assertDatabaseHas('urls', ['name' => 'https://www.mail.ru']);
-//        $this->assertDatabaseHas('urls', ['name' => 'https://www.google.com']);
-//
-//        $this->assertDatabaseHas('url_checks', ['url_id' => '1']);
-//        $this->assertDatabaseHas('url_checks', ['url_id' => '2']);
-//        $this->assertDatabaseHas('url_checks', ['url_id' => '3']);
-//    }
-
     public function testStore()
     {
-        Http::fake(function ($request) {
-            return Http::response('Preved medved', 200);
-        });
+        Http::fake([
+            // Заглушка JSON ответа для адреса yandex.ru ...
+            'https://www.yandex.ru' => Http::response(['foo' => 'bar'], 200),
 
-//        $response = Http::post('http://example.com/users', [
-//            'name' => 'Steve',
-//            'role' => 'Network Administrator',
-//        ]);
+        ]);
 
         $url = DB::table('urls')->first();
         $response = $this->post(route('checks.store', $url->id));
         $response->assertOk();
 
         $this->assertDatabaseHas('url_checks', ['url_id' => $url->id, 'status_code' => 200]);
+
     }
     /**
      * A basic feature test example.

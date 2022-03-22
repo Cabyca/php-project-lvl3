@@ -12,5 +12,4 @@
             </form>
         </div>
     </div>
-</div>
-@endsection('content')
+</div>@endsection('content')

@@ -18,24 +18,12 @@ class UrlController extends Controller
         $lastCheckSites = DB::table('urls')
             ->leftJoin('url_checks', 'urls.id', '=', 'url_checks.url_id')
             ->select('urls.id', 'urls.name', 'url_checks.status_code', 'url_checks.created_at')
-            ->groupBy('url_checks.url_id')
+            ->groupBy('urls.id')
             ->orderBy('urls.id');
-
-        //'url_checks.url_id',
 
         return view('urls.index', [
             'lastCheckSites' => $lastCheckSites->simplePaginate(15)
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -44,7 +32,7 @@ class UrlController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $url = $request->input('url.name');
         $request->validate([
@@ -73,10 +61,10 @@ class UrlController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $url = DB::table('urls')->find($id);
         $checksSite = DB::table('url_checks')
@@ -84,38 +72,5 @@ class UrlController extends Controller
             ->where('url_id', $id)
             ->get();
         return view('urls.show', compact('url', 'checksSite'));
-    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
