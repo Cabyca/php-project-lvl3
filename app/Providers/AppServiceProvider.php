@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -15,11 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //check that app is local
-        if (!$this->app->isLocal()) {
-            //else register your services you require for production
-            $this->app['request']->server->set('HTTPS', true);
-        }
+        //
     }
 
     /**
@@ -29,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        URL::forceScheme('https');
+        if (config('app.env') != 'local') {
+            \URL::forceScheme('https');
+        }
     }
 }
