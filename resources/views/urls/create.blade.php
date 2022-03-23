@@ -65,7 +65,7 @@ welcome.blade.php
                 <p class="lead">Бесплатно проверяйте сайты на SEO пригодность</p>
                 <form action="{{ route('urls.store') }}" method="post" class="d-flex justify-content-center">
                     @csrf
-                    <input type="hidden" name="_token" value="zSCb0MELmLXitVT44AkexysgbezyvliTcaub5SyH">
+
                     <input type="text" name="url[name]" value="" class="form-control form-control-lg" placeholder="https://www.example.com">
                     <input type="submit" class="btn btn-primary btn-lg ms-3 px-5 text-uppercase mx-3" value="Проверить">
                 </form>

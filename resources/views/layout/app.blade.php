@@ -3,10 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="zSCb0MELmLXitVT44AkexysgbezyvliTaub5SyH">
-
-    <title>Анализатор страниц</title>
+   <title>Анализатор страниц</title>
 
     <!-- Scripts -->
     <script src="https://php-page-analyzer-ru.hexlet.app/js/app.js" defer></script>

@@ -38,9 +38,9 @@
                     <tr>
                         <td>{{ $checkSite->id }}</td>
                         <td>{{ $checkSite->status_code }}</td>
-                        <td>{{ $checkSite->h1 }}</td>
-                        <td>{{ $checkSite->title }}</td>
-                        <td>{{ $checkSite->description }}</td>
+                        <td>{{ str_limit($checkSite->h1, $limit = 10) }}</td>
+                        <td>{{ str_limit($checkSite->title, $limit = 30) }}</td>
+                        <td>{{ str_limit($checkSite->description, $limit = 30) }}</td>
                         <td>{{ $checkSite->created_at }}</td>
                     </tr>
                 @endforeach
