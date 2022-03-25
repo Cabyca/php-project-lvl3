@@ -16,9 +16,11 @@
                     <tr>
                         <td>{{ $lastCheckSite->id }}</td>
                         <td><a href="{{ route('urls.show', $lastCheckSite->id) }}">{{ $lastCheckSite->name }}</a></td>
-                        <td>{{ $lastCheckSite->created_at }}</td>
-                        <td>{{ $lastCheckSite->status_code }}</td>
-                    </tr>
+                        @php($urlCheck = $urlsChecks[$lastCheckSite->id] ?? null)
+                        <td>{{ $urlCheck ? $urlCheck->created_at : ''}}</td>
+{{--                        <td>{{ $urlsChecks[$lastCheckSite->id]->status_code }}</td>--}}
+                        </tr>
+
                     @endforeach
                 </tbody>
             </table>

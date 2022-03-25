@@ -16,13 +16,21 @@ class UrlController extends Controller
     public function index()
     {
         $lastCheckSites = DB::table('urls')
-            ->leftJoin('url_checks', 'urls.id', '=', 'url_checks.url_id')
-            ->select('urls.id', 'urls.name', 'url_checks.status_code', 'url_checks.created_at')
-            ->groupBy('urls.id')
-            ->orderBy('urls.id');
+            ->orderBy('id');
+
+
+        $urlsChecks = DB::table('url_checks')
+            ->get()->keyBy('url_id');
+
+//        $checksSite = DB::table('url_checks') pluck('url_id')
+//            ->latest()
+//            ->where('url_id', $id)
+//            ->get();
+        //получить проверки для каждого урла последние проверки
 
         return view('urls.index', [
-            'lastCheckSites' => $lastCheckSites->simplePaginate(15)
+            'lastCheckSites' => $lastCheckSites->simplePaginate(15),
+            'urlsChecks' => $urlsChecks
         ]);
     }
 
