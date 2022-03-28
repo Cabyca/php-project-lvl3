@@ -40,14 +40,14 @@ class UrlControllerTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertOk();;
+        $response->assertOk();
     }
 
     public function test_a_urls_request()
     {
         $response = $this->get('/urls');
 
-        $response->assertOk();;
+        $response->assertOk();
     }
 
     public function test_a_urlss_request()

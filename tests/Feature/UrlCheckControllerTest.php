@@ -38,7 +38,7 @@ class UrlCheckControllerTest extends TestCase
 
         $url = DB::table('urls')->first();
         $response = $this->post(route('checks.store', $url->id));
-        $response->assertOk();
+        $response->assertStatus(302);;
 
         $this->assertDatabaseHas('url_checks', ['url_id' => $url->id, 'status_code' => 200]);
 
