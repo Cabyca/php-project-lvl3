@@ -46,6 +46,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {{ $checksSite->links() }}
         </div>
     </main>
 @endsection

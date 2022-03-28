@@ -15,10 +15,10 @@ class UrlCheckController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \DiDom\Exceptions\InvalidSelectorException
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
         $nameSite = DB::table('urls')->find($id)->name;
         $response = Http::get($nameSite);
@@ -37,15 +37,8 @@ class UrlCheckController extends Controller
             'description' => $description,
             'created_at' => Carbon::now()]);
 
-        $checksSite = DB::table('url_checks')
-            ->latest()
-            ->where('url_id', $id)
-            ->get();
-
-        $url = DB::table('urls')->find($id);
-
         flash('Страница успешно проверена')->success();
 
-        return view('urls.show', compact('checksSite', 'url'));
+        return redirect()->route('urls.show', [$id]);
     }
 }

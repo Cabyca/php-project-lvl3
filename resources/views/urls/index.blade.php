@@ -12,19 +12,20 @@
                         <th>Последняя проверка</th>
                         <th>Код ответа</th>
                     </tr>
-                    @foreach ($lastCheckSites as $lastCheckSite)
+                    @foreach ($urls as $url)
                     <tr>
-                        <td>{{ $lastCheckSite->id }}</td>
-                        <td><a href="{{ route('urls.show', $lastCheckSite->id) }}">{{ $lastCheckSite->name }}</a></td>
-                        @php($urlCheck = $urlsChecks[$lastCheckSite->id] ?? null)
+                        <td>{{ $url->id }}</td>
+                        <td><a href="{{ route('urls.show', $url->id) }}">{{ $url->name }}</a></td>
+                        @php
+                            /** @var object $url */
+                            $urlCheck = $urlsChecks[$url->id] ?? null
+                        @endphp
                         <td>{{ $urlCheck ? $urlCheck->created_at : ''}}</td>
-{{--                        <td>{{ $urlsChecks[$lastCheckSite->id]->status_code }}</td>--}}
+                        <td>{{ $urlCheck ? $urlCheck->status_code : ''}}</td>
                         </tr>
-
                     @endforeach
                 </tbody>
             </table>
-            {{ $lastCheckSites->links() }}
         </div>
     </div>
 </main>

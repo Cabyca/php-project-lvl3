@@ -15,21 +15,14 @@ class UrlController extends Controller
      */
     public function index()
     {
-        $lastCheckSites = DB::table('urls')
-            ->orderBy('id');
-
+        $urls = DB::table('urls')
+            ->orderBy('id')->get();
 
         $urlsChecks = DB::table('url_checks')
             ->get()->keyBy('url_id');
 
-//        $checksSite = DB::table('url_checks') pluck('url_id')
-//            ->latest()
-//            ->where('url_id', $id)
-//            ->get();
-        //получить проверки для каждого урла последние проверки
-
         return view('urls.index', [
-            'lastCheckSites' => $lastCheckSites->simplePaginate(15),
+            'urls' => $urls,
             'urlsChecks' => $urlsChecks
         ]);
     }
@@ -78,7 +71,7 @@ class UrlController extends Controller
         $checksSite = DB::table('url_checks')
             ->latest()
             ->where('url_id', $id)
-            ->get();
+            ->paginate(15);
         return view('urls.show', compact('url', 'checksSite'));
     }
 }
