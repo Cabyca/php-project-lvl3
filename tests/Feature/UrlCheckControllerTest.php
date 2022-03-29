@@ -25,7 +25,6 @@ class UrlCheckControllerTest extends TestCase
 
         DB::table('urls')->insert(['name' => 'https://www.yandex.ru', 'created_at' => $created_atForYandex]);
         DB::table('url_checks')->insert(['url_id' => '1', 'status_code' => 200, 'created_at' => $created_atForYandex]);
-
     }
 
     public function testStore()
@@ -38,17 +37,17 @@ class UrlCheckControllerTest extends TestCase
 
         $url = DB::table('urls')->first();
         $response = $this->post(route('checks.store', $url->id));
-        $response->assertStatus(302);;
+        $response->assertStatus(302);
+        ;
 
         $this->assertDatabaseHas('url_checks', ['url_id' => $url->id, 'status_code' => 200]);
-
     }
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_example()
+    public function testExample()
     {
         $response = $this->get('/');
 

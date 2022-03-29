@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UrlController;
 
-
 class UrlControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -36,21 +35,21 @@ class UrlControllerTest extends TestCase
         $this->assertDatabaseCount('urls', 3);
     }
 
-    public function test_a_basic_request()
+    public function testBasicRequest()
     {
         $response = $this->get('/');
 
         $response->assertOk();
     }
 
-    public function test_a_urls_request()
+    public function testUrlsRequest()
     {
         $response = $this->get('/urls');
 
         $response->assertOk();
     }
 
-    public function test_a_urlss_request()
+    public function testUrlssRequest()
     {
         $response = $this->get('/urlss');
 
