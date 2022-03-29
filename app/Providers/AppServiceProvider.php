@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if (config('app.env') != 'local') {
+            /** @phpstan-ignore-next-line */
             \URL::forceScheme('https');
         }
     }
