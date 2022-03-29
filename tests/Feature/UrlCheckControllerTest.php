@@ -36,6 +36,7 @@ class UrlCheckControllerTest extends TestCase
         ]);
 
         $url = DB::table('urls')->first();
+        /** @var object $url */
         $response = $this->post(route('checks.store', $url->id));
         $response->assertStatus(302);
         ;

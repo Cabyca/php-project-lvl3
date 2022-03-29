@@ -14,11 +14,11 @@ class UrlCheckController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \DiDom\Exceptions\InvalidSelectorException
      */
-    public function store(Request $request, $id): \Illuminate\Http\RedirectResponse
+    public function store(Request $request, int $id): \Illuminate\Http\RedirectResponse
     {
         $nameSite = DB::table('urls')->find($id)->name;
         $response = Http::get($nameSite);
