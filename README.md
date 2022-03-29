@@ -7,5 +7,5 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/94edf68cec6e9701ebb4/test_coverage)](https://codeclimate.com/github/Cabyca/php-project-lvl3/test_coverage)
 
-### Что получилось на heroku :
+### Что получилось на heroku:
 (https://cabyca3.herokuapp.com/)
