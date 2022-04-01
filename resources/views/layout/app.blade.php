@@ -28,7 +28,7 @@
                     <a class="nav-link active" href="/">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="{{ route('urls.index') }}">Сайты</a>
+                    <a class="nav-link active" href="{{ route('urls.index') }}">Сайты</a>
                 </li>
             </ul>
         </div>
