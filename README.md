@@ -7,5 +7,27 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/94edf68cec6e9701ebb4/test_coverage)](https://codeclimate.com/github/Cabyca/php-project-lvl3/test_coverage)
 
-### Что получилось на heroku:
-(https://cabyca3.herokuapp.com/)
+АНАЛИЗАТОР СТРАНИЦ
+Проверка страниц сайтов на SEO пригодность.
+
+Использование:
+На главной странице введите URL проверяемой страницы
+Нажмите "ПРОВЕРИТЬ"
+Посмотрите результат
+
+Также на вкладке "Сайты" можно посмотреть все страницы, которые уже были проверены другими.
+
+Требования:
+PHP (версия ^8.0)
+Composer
+
+Установка:
+$ https://github.com/Cabyca/php-project-lvl3.git
+$ cd php-project-lvl3
+$ make setup
+
+Локальный запуск:
+$ make start
+
+Демо проекта:
+https://cabyca3.herokuapp.com/
