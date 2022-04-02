@@ -34,7 +34,7 @@ class UrlController extends Controller
 //            ->orderBy('id')->paginate(50);
 
         $urls = DB::table('urls')
-            ->paginate('50');
+            ->paginate(50);
 
         $urlsChecks = DB::table('url_checks')
             ->get()->keyBy('url_id');
