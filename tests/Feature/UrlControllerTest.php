@@ -68,7 +68,7 @@ class UrlControllerTest extends TestCase
     {
         $dataCorrectNoExistsToBase = ['url' => ['name' => "https://www.PrevedMedved.ru"]];
         $response = $this->post(route('urls.store'), $dataCorrectNoExistsToBase);
-        $response->assertRedirect('/');
+        $response->assertRedirect('urls.show');
         $response->assertSessionHasNoErrors();
         $this->assertDatabaseHas('urls', ['name' => 'https://www.PrevedMedved.ru']);
     }
