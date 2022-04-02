@@ -77,7 +77,7 @@ class UrlControllerTest extends TestCase
     {
         $dataInCorrect = ['url' => ['name' => "yandex"]];
         $response = $this->post(route('urls.store'), $dataInCorrect);
-        $response->assertRedirect('/');
+        $response->assertRedirect('urls.show');
         $response->assertSessionHasErrors();
         $this->assertDatabaseMissing('urls', ['name' => "yandex"]);
     }
