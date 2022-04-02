@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -21,23 +23,28 @@ class UrlCheckController extends Controller
     public function store(Request $request, int $id): \Illuminate\Http\RedirectResponse
     {
         $nameSite = DB::table('urls')->find($id)->name;
-        $response = Http::get($nameSite);
-        $status_code = $response->status();
 
-        $document = new Document($response->body());
-        $h1 = optional($document->first('h1'))->text();
-        $title = optional($document->first('title'))->text();
-        $description = optional($document->first('meta[name=description]'))->getAttribute('content');
+        try {
+            $response = Http::get($nameSite);
+            $status_code = $response->status();
 
-        DB::table('url_checks')->insert([
-            'url_id' => $id,
-            'status_code' => $status_code,
-            'h1' => $h1,
-            'title' => $title,
-            'description' => $description,
-            'created_at' => Carbon::now()]);
+            $document = new Document($response->body());
+            $h1 = optional($document->first('h1'))->text();
+            $title = optional($document->first('title'))->text();
+            $description = optional($document->first('meta[name=description]'))->getAttribute('content');
 
-        flash('Страница успешно проверена')->success();
+            DB::table('url_checks')->insert([
+                'url_id' => $id,
+                'status_code' => $status_code,
+                'h1' => $h1,
+                'title' => $title,
+                'description' => $description,
+                'created_at' => Carbon::now()]);
+
+            flash('Страница успешно проверена')->success();
+        } catch (HttpClientException|RequestException $e) {
+            flash($e->getMessage())->error();
+        }
 
         return redirect()->route('urls.show', [$id]);
     }
