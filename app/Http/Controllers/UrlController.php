@@ -18,8 +18,23 @@ class UrlController extends Controller
 //        $urls = DB::table('urls')
 //            ->orderBy('id')->get();
 
+//        $lastChecks = DB::table('url_checks')
+//            ->orderBy('url_id')
+//            ->latest()
+//            ->distinct('url_id')
+//            ->get()
+//            ->keyBy('url_id');
+//
+//        $urls = DB::table('urls')
+//            ->oldest()
+//            ->paginate();
+
+//        // Есть:
+//        $urls = DB::table('urls')
+//            ->orderBy('id')->paginate(50);
+
         $urls = DB::table('urls')
-            ->orderBy('id')->paginate(50);
+            ->paginate('50');
 
         $urlsChecks = DB::table('url_checks')
             ->get()->keyBy('url_id');

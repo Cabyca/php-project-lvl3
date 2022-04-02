@@ -77,7 +77,7 @@ class UrlControllerTest extends TestCase
     {
         $dataInCorrect = ['url' => ['name' => "yandex"]];
         $response = $this->post(route('urls.store'), $dataInCorrect);
-        $response->assertRedirect('urls.show', ['url' => 4]);
+        //$response->assertRedirect('urls.show', ['url' => 4]);
         $response->assertSessionHasErrors();
         $this->assertDatabaseMissing('urls', ['name' => "yandex"]);
     }
@@ -86,7 +86,7 @@ class UrlControllerTest extends TestCase
     {
         $id = DB::table('urls')->where('name', 'https://www.yandex.ru')->value('id');
         $response = $this->post(route('urls.store'), ['url' => ['name' => "https://www.yandex.ru"]]);
-        //$response->assertRedirect(route('urls.show', ['url' => $id]));
+        $response->assertRedirect(route('urls.show', ['url' => $id]));
         $response->assertSessionHasNoErrors();
         $this->assertDatabaseHas('urls', ['name' => 'https://www.yandex.ru']);
     }
