@@ -42,7 +42,7 @@ class UrlCheckController extends Controller
                 'created_at' => Carbon::now()]);
 
             flash('Страница успешно проверена')->success();
-        } catch (HttpClientException|RequestException $e) {
+        } catch (HttpClientException | RequestException $e) {
             flash($e->getMessage())->error();
         }
 
