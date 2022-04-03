@@ -16,6 +16,7 @@ class UrlController extends Controller
     public function index(): \Illuminate\Contracts\View\View
     {
         $urls = DB::table('urls')
+            ->orderBy('id')
             ->simplePaginate(50);
 
         $urlsChecks = DB::table('url_checks')
