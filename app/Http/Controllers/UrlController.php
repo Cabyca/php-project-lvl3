@@ -16,7 +16,7 @@ class UrlController extends Controller
     public function index(): \Illuminate\Contracts\View\View
     {
         $urls = DB::table('urls')
-            ->paginate(50);
+            ->simplePaginate(50);
 
         $urlsChecks = DB::table('url_checks')
             ->get()->keyBy('url_id');
@@ -71,7 +71,7 @@ class UrlController extends Controller
         $checksSite = DB::table('url_checks')
             ->latest()
             ->where('url_id', $id)
-            ->paginate(15);
+            ->simplePaginate(15);
         return view('urls.show', compact('url', 'checksSite'));
     }
 }
