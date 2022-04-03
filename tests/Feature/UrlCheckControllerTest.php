@@ -20,8 +20,6 @@ class UrlCheckControllerTest extends TestCase
         parent::setUp();
 
         $created_atForYandex = Carbon::now();
-        $created_atForMail = Carbon::now();
-        $created_atForGoogle = Carbon::now();
 
         DB::table('urls')->insert(['name' => 'https://www.yandex.ru', 'created_at' => $created_atForYandex]);
         DB::table('url_checks')->insert(['url_id' => '1', 'status_code' => 200, 'created_at' => $created_atForYandex]);
