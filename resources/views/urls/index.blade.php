@@ -26,6 +26,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $urls->links() }}
         </div>
     </div>
 </main>
