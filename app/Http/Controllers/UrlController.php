@@ -17,7 +17,7 @@ class UrlController extends Controller
     {
 
         $urls = DB::table('urls')
-            ->simplePaginate(3);
+            ->simplePaginate(50);
 
         $urlsChecks = DB::table('url_checks')
             ->get()->keyBy('url_id');
