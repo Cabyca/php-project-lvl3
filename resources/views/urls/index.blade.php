@@ -22,7 +22,7 @@
                         @endphp
                         <td>{{ $urlCheck ? $urlCheck->created_at : ''}}</td>
                         <td>{{ $urlCheck ? $urlCheck->status_code : ''}}</td>
-                        </tr>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
