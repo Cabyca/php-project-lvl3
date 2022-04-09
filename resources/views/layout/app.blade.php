@@ -22,7 +22,31 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        @yield('navbar')
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                @php
+                    $currentUrl = parse_url(url()->current(), PHP_URL_PATH);
+                @endphp
+                <li class="nav-item">
+                    <a href="/"
+                    @if ($currentUrl === null)
+                        @php echo 'class="nav-link active"'; @endphp
+                        @else
+                        @php echo 'class="nav-link"'; @endphp
+                        @endif
+                    >Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('urls.index') }}"
+                    @if ($currentUrl === '/urls')
+                        @php echo 'class="nav-link active"'; @endphp
+                        @else
+                        @php echo 'class="nav-link"'; @endphp
+                        @endif
+                    >Сайты</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
 @include('flash::message')

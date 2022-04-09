@@ -38,9 +38,9 @@
                     <tr>
                         <td>{{ $checkSite->id }}</td>
                         <td>{{ $checkSite->status_code }}</td>
-                        <td>{{ str_limit($checkSite->h1, $limit = 10) }}</td>
-                        <td>{{ str_limit($checkSite->title, $limit = 30) }}</td>
-                        <td>{{ str_limit($checkSite->description, $limit = 30) }}</td>
+                        <td>{{ str_limit($checkSite->h1, 10) }}</td>
+                        <td>{{ str_limit($checkSite->title, 30) }}</td>
+                        <td>{{ str_limit($checkSite->description, 30) }}</td>
                         <td>{{ $checkSite->created_at }}</td>
                     </tr>
                 @endforeach
@@ -49,16 +49,4 @@
             {{ $checksSite->links() }}
         </div>
     </main>
-@endsection
-@section('navbar')
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/">Главная</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('urls.index') }}">Сайты</a>
-            </li>
-        </ul>
-    </div>
 @endsection

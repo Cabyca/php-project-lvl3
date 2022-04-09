@@ -16,15 +16,3 @@
     </div>
 </main>
 @endsection('content')
-@section('navbar')
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/">Главная</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('urls.index') }}">Сайты</a>
-            </li>
-        </ul>
-    </div>
-@endsection

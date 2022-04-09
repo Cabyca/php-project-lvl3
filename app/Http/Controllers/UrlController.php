@@ -20,7 +20,10 @@ class UrlController extends Controller
             ->simplePaginate(15);
 
         $urlsChecks = DB::table('url_checks')
-            ->get()->keyBy('url_id');
+            ->oldest()
+            ->distinct('url_id')
+            ->get()
+            ->keyBy('url_id');
 
         return view('urls.index', [
             'urls' => $urls,
@@ -53,8 +56,7 @@ class UrlController extends Controller
 
         $date = Carbon::now();
 
-        DB::table('urls')->insert(['name' => $urlToDatabase, 'created_at' => $date]);
-        $id = DB::table('urls')->where('name', $urlToDatabase)->value('id');
+        $id = DB::table('urls')->insertGetId(['name' => $urlToDatabase, 'created_at' => $date]);
 
         flash('Url успешно добавлен')->success();
         return redirect()->route('urls.show', ['url' => $id]);
@@ -69,6 +71,9 @@ class UrlController extends Controller
     public function show(int $id): \Illuminate\Contracts\View\View
     {
         $url = DB::table('urls')->find($id);
+
+        abort_unless($url, 404);
+
         $checksSite = DB::table('url_checks')
             ->latest()
             ->where('url_id', $id)

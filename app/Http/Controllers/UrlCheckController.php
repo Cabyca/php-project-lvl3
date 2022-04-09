@@ -24,6 +24,8 @@ class UrlCheckController extends Controller
     {
         $nameSite = DB::table('urls')->find($id)->name;
 
+        abort_unless($nameSite, 404);
+
         try {
             $response = Http::get($nameSite);
             $status_code = $response->status();

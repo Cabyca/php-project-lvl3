@@ -19,10 +19,10 @@ class UrlCheckControllerTest extends TestCase
     {
         parent::setUp();
 
-        $created_atForYandex = Carbon::now();
+        $created_at = Carbon::now();
 
-        DB::table('urls')->insert(['name' => 'https://www.yandex.ru', 'created_at' => $created_atForYandex]);
-        DB::table('url_checks')->insert(['url_id' => '1', 'status_code' => 200, 'created_at' => $created_atForYandex]);
+        DB::table('urls')->insert(['name' => 'https://www.yandex.ru', 'created_at' => $created_at]);
+        DB::table('url_checks')->insert(['url_id' => '1', 'status_code' => 200, 'created_at' => $created_at]);
     }
 
     public function testStore()
@@ -37,19 +37,8 @@ class UrlCheckControllerTest extends TestCase
         /** @var object $url */
         $response = $this->post(route('checks.store', $url->id));
         $response->assertStatus(302);
-        ;
+        $response->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('url_checks', ['url_id' => $url->id, 'status_code' => 200]);
-    }
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
     }
 }
