@@ -20,17 +20,11 @@ class UrlController extends Controller
             ->simplePaginate(15);
 
         $urlsChecks = DB::table('url_checks')
-            ->distinct('url_id', 'created_at')
-            //->orderBy('url_id')
+            ->orderBy('url_id')
             ->oldest()
+            ->distinct('url_id')
             ->get()
             ->keyBy('url_id');
-
-//        $urlsChecks = DB::table('url_checks')
-//            ->oldest()
-//            ->distinct('url_id')
-//            ->get()
-//            ->keyBy('url_id');
 
         return view('urls.index', [
             'urls' => $urls,
