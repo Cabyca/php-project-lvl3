@@ -30,18 +30,18 @@
                 <li class="nav-item">
                     <a href="/"
                     @if ($currentUrl === null)
-                        @php echo 'class="nav-link active"'; @endphp
+                        {!! 'class="nav-link active"' !!}
                         @else
-                        @php echo 'class="nav-link"'; @endphp
+                        {!! 'class="nav-link"' !!}
                         @endif
                     >Главная</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('urls.index') }}"
                     @if ($currentUrl === '/urls')
-                        @php echo 'class="nav-link active"'; @endphp
+                        {!! 'class="nav-link active"' !!}
                         @else
-                        @php echo 'class="nav-link"'; @endphp
+                        {!! 'class="nav-link"' !!}
                         @endif
                     >Сайты</a>
                 </li>
