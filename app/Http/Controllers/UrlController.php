@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 class UrlController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
