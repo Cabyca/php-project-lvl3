@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 class UrlController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +21,7 @@ class UrlController extends Controller
         $urlsChecks = DB::table('url_checks')
             ->orderBy('url_id')
             ->oldest()
-            ->distinct('url_id')
+            //->distinct('url_id')
             ->get()
             ->keyBy('url_id');
 
