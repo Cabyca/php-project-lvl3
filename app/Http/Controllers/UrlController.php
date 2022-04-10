@@ -18,17 +18,14 @@ class UrlController extends Controller
         $urls = DB::table('urls')
             ->simplePaginate(15);
 
-        $urlsChecks = DB::table('url_checks')
+        $lastChecks = DB::table('url_checks')
             ->orderBy('url_id')
             ->oldest()
             //->distinct('url_id')
             ->get()
             ->keyBy('url_id');
 
-        return view('urls.index', [
-            'urls' => $urls,
-            'urlsChecks' => $urlsChecks
-        ]);
+        return view('urls.index', compact('urls', 'lastChecks'));
     }
 
     /**
