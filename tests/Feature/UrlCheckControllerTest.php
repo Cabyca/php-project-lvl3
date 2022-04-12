@@ -25,8 +25,7 @@ class UrlCheckControllerTest extends TestCase
 
     public function testStore()
     {
-        $testHtml = file_get_contents(implode(DIRECTORY_SEPARATOR,
-            [__DIR__, '..', "Fixtures", 'test.html']));
+        $testHtml = file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', "Fixtures", 'test.html']));
 
         if (!$testHtml) {
             throw new \Exception("Cannot get content from fixture");
@@ -42,12 +41,6 @@ class UrlCheckControllerTest extends TestCase
         $response = $this->post(route('checks.store', $url->id));
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('url_checks',
-            ['h1' => 'Проанализировать страницу',
-                'title' => 'Анализатор страниц',
-                'description' => 'Description',
-                'url_id' => $this->id,
-                'status_code' => 200]
-        );
+        $this->assertDatabaseHas('url_checks', ['h1' => 'Проанализировать страницу', 'title' => 'Анализатор страниц', 'description' => 'Description', 'url_id' => $this->id, 'status_code' => 200]);
     }
 }
