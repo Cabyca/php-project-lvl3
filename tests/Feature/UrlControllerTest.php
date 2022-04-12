@@ -14,15 +14,11 @@ class UrlControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     */
     protected function setUp(): void
     {
         parent::setUp();
 
+        /** @var int $id */
         $this->id = DB::table('urls')->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
 
