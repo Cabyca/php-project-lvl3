@@ -19,7 +19,7 @@ class UrlControllerTest extends TestCase
         parent::setUp();
 
         /**
-         * @property integer $id
+         * @property integer $this->id
          */
         $this->id = DB::table('urls')->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
