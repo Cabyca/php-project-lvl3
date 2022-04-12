@@ -80,6 +80,7 @@ class UrlControllerTest extends TestCase
 
     public function testShow()
     {
+        /** @phpstan-ignore-next-line */
         $id = DB::table('urls')->where('id', $this->id)->value('id');
         $response = $this->get(route('urls.show', $id));
         $response->assertOk();
