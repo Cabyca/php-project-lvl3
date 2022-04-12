@@ -18,21 +18,7 @@ class UrlControllerTest extends TestCase
     {
         parent::setUp();
 
-        DB::table('urls')->insert(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
-        DB::table('urls')->insert(['name' => 'https://www.mail.ru', 'created_at' => Carbon::now()]);
-        DB::table('urls')->insert(['name' => 'https://www.google.com', 'created_at' => Carbon::now()]);
-    }
-
-    public function testAssertDatabaseHas(): void
-    {
-        $this->assertDatabaseHas('urls', ['name' => 'https://www.yandex.ru']);
-        $this->assertDatabaseHas('urls', ['name' => 'https://www.mail.ru']);
-        $this->assertDatabaseHas('urls', ['name' => 'https://www.google.com']);
-    }
-
-    public function testAssertDatabaseCount()
-    {
-        $this->assertDatabaseCount('urls', 3);
+        $this->id = DB::table('urls')->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
 
     public function testBasicRequest()
@@ -68,7 +54,7 @@ class UrlControllerTest extends TestCase
     {
         $dataCorrectNoExistsToBase = ['url' => ['name' => "https://www.PrevedMedved.ru"]];
         $response = $this->post(route('urls.store'), $dataCorrectNoExistsToBase);
-        $response->assertRedirect(route('urls.show', ['url' => 4]));
+        $response->assertRedirectContains('urls/');
         $response->assertSessionHasNoErrors();
         $this->assertDatabaseHas('urls', ['name' => 'https://www.PrevedMedved.ru']);
     }
@@ -93,7 +79,7 @@ class UrlControllerTest extends TestCase
 
     public function testShow()
     {
-        $id = DB::table('urls')->where('id', 1)->value('id');
+        $id = DB::table('urls')->where('id', $this->id)->value('id');
         $response = $this->get(route('urls.show', $id));
         $response->assertOk();
         $nameUrl = DB::table('urls')->find($id)->name;

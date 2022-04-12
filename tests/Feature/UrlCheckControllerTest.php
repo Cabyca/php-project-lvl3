@@ -19,18 +19,22 @@ class UrlCheckControllerTest extends TestCase
     {
         parent::setUp();
 
-        $created_at = Carbon::now();
-
-        DB::table('urls')->insert(['name' => 'https://www.yandex.ru', 'created_at' => $created_at]);
-        DB::table('url_checks')->insert(['url_id' => '1', 'status_code' => 200, 'created_at' => $created_at]);
+        $this->id = DB::table('urls')
+            ->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
 
     public function testStore()
     {
+        $testHtml = file_get_contents(implode(DIRECTORY_SEPARATOR,
+            [__DIR__, '..', "Fixtures", 'test.html']));
+
+        if (!$testHtml) {
+            throw new \Exception("Cannot get content from fixture");
+        }
+
         Http::fake([
             // Заглушка JSON ответа для адреса yandex.ru ...
-            'https://www.yandex.ru' => Http::response(['foo' => 'bar'], 200),
-
+            'https://www.yandex.ru' => Http::response($testHtml, 200)
         ]);
 
         $url = DB::table('urls')->first();
@@ -38,7 +42,12 @@ class UrlCheckControllerTest extends TestCase
         $response = $this->post(route('checks.store', $url->id));
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
-
-        $this->assertDatabaseHas('url_checks', ['url_id' => $url->id, 'status_code' => 200]);
+        $this->assertDatabaseHas('url_checks',
+            ['h1' => 'Проанализировать страницу',
+                'title' => 'Анализатор страниц',
+                'description' => 'Description',
+                'url_id' => $this->id,
+                'status_code' => 200]
+        );
     }
 }
