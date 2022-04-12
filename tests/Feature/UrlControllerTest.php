@@ -14,6 +14,11 @@ class UrlControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     */
     protected function setUp(): void
     {
         parent::setUp();
