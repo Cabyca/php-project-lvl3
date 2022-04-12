@@ -19,7 +19,9 @@ class UrlCheckControllerTest extends TestCase
     {
         parent::setUp();
 
-        /** @phpstan-ignore-next-line */
+        /**
+         * @property integer $id
+         */
         $this->id = DB::table('urls')
             ->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
@@ -30,7 +32,6 @@ class UrlCheckControllerTest extends TestCase
 
         Http::fake(['https://www.yandex.ru' => Http::response($testHtml, 200)]);
 
-        /** @phpstan-ignore-next-line */
         $expectedData = [
             'h1' => 'Проанализировать страницу',
             'title' => 'Анализатор страниц',

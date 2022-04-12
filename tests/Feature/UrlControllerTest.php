@@ -18,7 +18,9 @@ class UrlControllerTest extends TestCase
     {
         parent::setUp();
 
-        /** @phpstan-ignore-next-line */
+        /**
+         * @property integer $id
+         */
         $this->id = DB::table('urls')->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
 
@@ -80,7 +82,6 @@ class UrlControllerTest extends TestCase
 
     public function testShow()
     {
-        /** @phpstan-ignore-next-line */
         $id = DB::table('urls')->where('id', $this->id)->value('id');
         $response = $this->get(route('urls.show', $id));
         $response->assertOk();
