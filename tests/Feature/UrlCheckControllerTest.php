@@ -19,9 +19,7 @@ class UrlCheckControllerTest extends TestCase
     {
         parent::setUp();
 
-        /**
-         * @property integer $id
-         */
+        /* @var $this */
         $this->id = DB::table('urls')
             ->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
@@ -41,7 +39,6 @@ class UrlCheckControllerTest extends TestCase
         ];
 
         $url = DB::table('urls')->first();
-        /** @var object $url */
         $response = $this->post(route('checks.store', $url->id));
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
