@@ -39,8 +39,8 @@ class UrlCheckControllerTest extends TestCase
             'status_code' => 200
         ];
 
-        $url = DB::table('urls')->first();
-        $response = $this->post(route('checks.store', $url->id));
+//        $url = DB::table('urls')->first();
+        $response = $this->post(route('checks.store', $this->id));
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
         $this->assertDatabaseHas('url_checks', $expectedData);
