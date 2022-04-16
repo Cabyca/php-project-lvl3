@@ -24,12 +24,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                @php
-                    $currentUrl = parse_url(url()->current(), PHP_URL_PATH);
-                @endphp
                 <li class="nav-item">
                     <a href="/"
-                    @if ($currentUrl === null)
+                    @if (!Route::is('urls.index'))
                         {!! 'class="nav-link active"' !!}
                         @else
                         {!! 'class="nav-link"' !!}
@@ -38,7 +35,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('urls.index') }}"
-                    @if ($currentUrl === '/urls')
+                    @if (Route::is('urls.index'))
                         {!! 'class="nav-link active"' !!}
                         @else
                         {!! 'class="nav-link"' !!}

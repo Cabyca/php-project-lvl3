@@ -17,7 +17,7 @@ use App\Http\Controllers\UrlController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::resource('urls', UrlController::class)->only([
     'index', 'store', 'show'

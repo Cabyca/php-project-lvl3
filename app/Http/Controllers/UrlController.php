@@ -42,18 +42,18 @@ class UrlController extends Controller
         ]);
 
         $parseUrl = parse_url($url);
-        $urlToDatabase = $parseUrl['scheme'] . "://" . $parseUrl['host'];
+        $normalizedUrl = mb_strtolower($parseUrl['scheme'] . "://" . $parseUrl['host']);
 
-        $checkId = DB::table('urls')->where('name', $urlToDatabase)->value('id');
+        $id = DB::table('urls')->where('name', $normalizedUrl)->value('id');
 
-        if ($checkId) {
+        if ($id) {
             flash('Страница уже существует')->success();
-            return redirect()->route('urls.show', ['url' => $checkId]);
+            return redirect()->route('urls.show', ['url' => $id]);
         }
 
         $date = Carbon::now();
 
-        $id = DB::table('urls')->insertGetId(['name' => $urlToDatabase, 'created_at' => $date]);
+        $id = DB::table('urls')->insertGetId(['name' => $normalizedUrl, 'created_at' => $date]);
 
         flash('Url успешно добавлен')->success();
         return redirect()->route('urls.show', ['url' => $id]);

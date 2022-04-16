@@ -3,18 +3,12 @@
 namespace Tests\Feature;
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UrlCheckController;
 use Illuminate\Support\Facades\Http;
 
 class UrlCheckControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     protected int $id;
 
     protected function setUp(): void

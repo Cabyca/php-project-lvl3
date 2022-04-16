@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
@@ -12,8 +11,6 @@ use App\Http\Controllers\UrlController;
 
 class UrlControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     protected int $id;
 
     protected function setUp(): void
@@ -23,49 +20,33 @@ class UrlControllerTest extends TestCase
         $this->id = DB::table('urls')->insertGetId(['name' => 'https://www.yandex.ru', 'created_at' => Carbon::now()]);
     }
 
-    public function testBasicRequest()
-    {
-        $response = $this->get('/');
-
-        $response->assertOk();
-    }
-
     public function testUrlsRequest()
     {
-        $response = $this->get('/urls');
-
+        $response = $this->get(route('urls.index'));
         $response->assertOk();
-    }
-
-    public function testUrlssRequest()
-    {
-        $response = $this->get('/urlss');
-
-        $response->assertNotFound();
     }
 
     public function testIndex()
     {
         $response = $this->get(route('urls.index'));
         $response->assertOk();
-        $namesUrl = DB::table('urls')->pluck('name')->toArray();
         $response->assertViewIs('urls.index');
     }
 
-    public function testStoreValid()
+    public function testStore()
     {
-        $dataCorrectNoExistsToBase = ['url' => ['name' => "https://www.PrevedMedved.ru"]];
-        $response = $this->post(route('urls.store'), $dataCorrectNoExistsToBase);
-        $response->assertRedirectContains('urls/');
+        $data = ['url' => ['name' => "https://www.PrevedMedved.ru"]];
+        $response = $this->post(route('urls.store'), $data);
+        $response->assertRedirect();
         $response->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('urls', ['name' => 'https://www.PrevedMedved.ru']);
+        $this->assertDatabaseHas('urls', ['name' => 'https://www.prevedmedved.ru']);
     }
 
-    public function testStoreNoValid()
+    public function testStoreInvalid()
     {
-        $dataInCorrect = ['url' => ['name' => "yandex"]];
-        $response = $this->post(route('urls.store'), $dataInCorrect);
-        $response->assertRedirect('/');
+        $data = ['url' => ['name' => "yandex"]];
+        $response = $this->post(route('urls.store'), $data);
+        $response->assertRedirect();
         $response->assertSessionHasErrors();
         $this->assertDatabaseMissing('urls', ['name' => "yandex"]);
     }

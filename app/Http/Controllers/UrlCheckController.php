@@ -22,12 +22,12 @@ class UrlCheckController extends Controller
      */
     public function store(Request $request, int $id): \Illuminate\Http\RedirectResponse
     {
-        $nameSite = DB::table('urls')->find($id)->name;
+        $url = DB::table('urls')->find($id)->name;
 
-        abort_unless($nameSite, 404);
+        abort_unless($url, 404);
 
         try {
-            $response = Http::get($nameSite);
+            $response = Http::get($url);
             $status_code = $response->status();
 
             $document = new Document($response->body());
